@@ -1,4 +1,8 @@
 /* DashboardComponent's private CSS styles */
+mat-grid-tile {
+  background: lightblue;
+}
+
 [class*='col-'] {
     float: left;
     padding-right: 20px;
