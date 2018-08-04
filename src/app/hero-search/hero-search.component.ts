@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { Observable, Subject } from 'rxjs';
 
@@ -17,6 +18,9 @@ import { HeroService } from '../hero.service';
 export class HeroSearchComponent implements OnInit {
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
+
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
 
   constructor(private heroService: HeroService) {}
 

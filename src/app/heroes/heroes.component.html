@@ -1,21 +1,26 @@
-<h2>My Heroes</h2>
+<mat-card>
+    <mat-card-title>My Heroes</mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="Hero Name" #heroName>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="add(heroName.value); heroName.value=''">Add</button>
+    </mat-card-actions>
+</mat-card>
 
-<div>
-  <label>Hero name:
-    <input #heroName />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(heroName.value); heroName.value=''">
-    add
-  </button>
-</div>
+<mat-divider></mat-divider>
 
-<ul class="heroes">
-  <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </a>
-    <button class="delete" title="delete hero"
-      (click)="delete(hero)">x</button>
-  </li>
-</ul>
+<mat-card>
+  <mat-chip-list>
+    <mat-chip color="primary" selected *ngFor="let hero of heroes">
+      <a routerLink="/detail/{{hero.id}}">
+        {{hero.id}} - {{hero.name}}
+      </a>
+      <mat-icon matChipRemove (click)="delete(hero)">
+        delete hero
+      </mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+</mat-card>

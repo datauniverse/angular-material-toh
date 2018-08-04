@@ -1,9 +1,16 @@
-<h3>Top Heroes</h3>
+<mat-card>
+  <mat-card-title>Top Heroes</mat-card-title>
+  <mat-card-content>
+    <mat-chip-list>
+      <mat-chip color="primary" selected *ngFor="let hero of heroes">
+        <a routerLink="/detail/{{hero.id}}">
+          {{hero.name}}
+        </a>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>
 
-<mat-grid-list cols="4" rowHeight="1:1">
-  <mat-grid-tile *ngFor="let hero of heroes" routerLink="/detail/{{hero.id}}">
-    {{hero.name}}
-  </mat-grid-tile>
-</mat-grid-list>
+<mat-divider></mat-divider>
 
 <app-hero-search></app-hero-search>
