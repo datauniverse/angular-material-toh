@@ -42,7 +42,7 @@ export class HeroSearchComponent implements OnInit {
         this.superheroCollection = this.afs.collection<Superhero>('superheroes', ref => {
           return ref.orderBy('name').startAt(term).endAt(term + '\uf8ff').limit(10);
         });
-        
+
         return this.superheroCollection.snapshotChanges().pipe(
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Superhero;
