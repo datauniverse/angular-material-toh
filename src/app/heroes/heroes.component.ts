@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
+
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Superhero } from '../superhero';
 
 @Component({
   selector: 'app-heroes',
@@ -9,31 +12,29 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Hero[];
+  private superheroCollection: AngularFirestoreCollection<Superhero>;
+  superheroes: Observable<Superhero[]>;
 
-  constructor(private heroService: HeroService) { }
-
-  ngOnInit() {
-    this.getHeroes();
+  constructor(private afs: AngularFirestore) { 
+    this.superheroCollection = this.afs.collection<Superhero>('superheroes');
+    this.superheroes = this.superheroCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Superhero;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 
-  getHeroes(): void {
-    this.heroService.getHeroes()
-    .subscribe(heroes => this.heroes = heroes);
-  }
+  ngOnInit() { }
 
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => {
-        this.heroes.push(hero);
-      });
+    this.superheroCollection.add({ name: name });
   }
 
-  delete(hero: Hero): void {
-    this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroService.deleteHero(hero).subscribe();
+  delete(superhero: Superhero): void {
+    this.superheroCollection.doc(superhero.id).delete();
   }
-
 }

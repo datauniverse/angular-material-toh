@@ -4,8 +4,8 @@
     <input #searchBox matInput placeholder="Hero Name" (keyup)="search(searchBox.value)">
   </mat-form-field>
   <mat-nav-list>
-    <mat-list-item *ngFor="let hero of heroes$ | async">
-        <a matLine routerLink="/detail/{{hero.id}}">{{hero.name}}</a>
+    <mat-list-item *ngFor="let superhero of superheroes | async">
+        <a matLine routerLink="/detail/{{superhero.id}}">{{superhero.name}}</a>
         <mat-divider [inset]="true"></mat-divider>
     </mat-list-item>
   </mat-nav-list>

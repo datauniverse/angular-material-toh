@@ -14,11 +14,11 @@
 
 <mat-card>
   <mat-chip-list>
-    <mat-chip color="primary" selected *ngFor="let hero of heroes">
-      <a routerLink="/detail/{{hero.id}}">
-        {{hero.id}} - {{hero.name}}
+    <mat-chip color="primary" selected *ngFor="let superhero of superheroes | async">
+      <a routerLink="/detail/{{superhero.id}}">
+        {{superhero.name}}
       </a>
-      <mat-icon matChipRemove (click)="delete(hero)">
+      <mat-icon matChipRemove (click)="delete(superhero)">
         delete hero
       </mat-icon>
     </mat-chip>

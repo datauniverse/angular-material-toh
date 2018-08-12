@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
+
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Superhero } from '../superhero';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,16 +12,22 @@ import { HeroService } from '../hero.service';
   styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent implements OnInit {
-  heroes: Hero[] = [];
+  private superheroCollection: AngularFirestoreCollection<Superhero>;
+  superheroes: Observable<Superhero[]>;
 
-  constructor(private heroService: HeroService) { }
+  constructor(private afs: AngularFirestore) {
+    this.superheroCollection = this.afs.collection<Superhero>('superheroes', ref => {
+      return ref.limit(4);
+    });
 
-  ngOnInit() {
-    this.getHeroes();
+    this.superheroes = this.superheroCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Superhero;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 
-  getHeroes(): void {
-    this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes.slice(1, 5));
-  }
+  ngOnInit() { }
 }

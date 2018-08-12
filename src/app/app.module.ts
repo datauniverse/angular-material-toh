@@ -15,10 +15,11 @@ import { HeroSearchComponent }  from './hero-search/hero-search.component';
 import { MessagesComponent }    from './messages/messages.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-  FormsModule,
-  ReactiveFormsModule
-}    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../environments/environment';
 
 import {
   MatButtonModule,
@@ -43,12 +44,6 @@ import {
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -60,7 +55,12 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    // Enable local caching thus enabling the app to stay available offline
+    // AngularFirestoreModule.enablePersistence()
+    AngularFirestoreModule
   ],
   declarations: [
     AppComponent,
@@ -70,6 +70,7 @@ import {
     MessagesComponent,
     HeroSearchComponent
   ],
+  providers: [ ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
