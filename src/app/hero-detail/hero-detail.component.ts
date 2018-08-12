@@ -32,7 +32,7 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
-  save(superhero: Superhero): void {
+  save(): void {
     this.superheroesDoc.update({ name: this.newSuperheroName });
   }
 }
