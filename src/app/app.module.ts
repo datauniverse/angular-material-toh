@@ -35,6 +35,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     // Enable local caching thus enabling the app to stay available offline
     // AngularFirestoreModule.enablePersistence()
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
