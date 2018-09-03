@@ -36,10 +36,11 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -62,7 +63,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     // Enable local caching thus enabling the app to stay available offline
     // AngularFirestoreModule.enablePersistence()
     AngularFirestoreModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    RouterModule
   ],
   declarations: [
     AppComponent,

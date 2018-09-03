@@ -20,5 +20,11 @@
         "/assets/**"
       ]
     }
-  }]
+  }],
+
+  "external": {
+    "urls": [
+      { "url": "https://fonts.googleapis.com/icon?family=Material+Icons" }
+    ]
+  }
 }
